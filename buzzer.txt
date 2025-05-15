@@ -1,0 +1,35 @@
+#include <lpc17xx.h>   
+ 
+#define SwitchPinNumber 11// port P2.11 connected to switch
+#define LedPinNumber    19 //port 1.19-p1.26 connected to 8 leds
+#define relayPinNumber    28 //port P1.28 connected to relay
+#define buzzerPinNumber    27 //port P1.27 connected to buzzer
+ 
+int main (void)
+{	    		
+ 
+  uint32_t switchStatus;
+  LPC_GPIO1->FIODIR = 0x1ff80000;		/* P1.xx defined as Outputs */
+  LPC_GPIO1->FIOCLR = 0x1ff80000;		/* turn off all the LEDs&relay&buzzer */
+  LPC_GPIO2->FIODIR = 0x00000000;		/* P2.xx defined as input */
+  
+
+ while(1)
+    {
+
+     /* Turn On all the leds and wait for one second */ 
+       switchStatus = (LPC_GPIO2->FIOPIN>>SwitchPinNumber) & 0x01 ;  // Read the switch status
+       
+       if(switchStatus == 0)                        //if switch pressed
+       {  
+        LPC_GPIO1->FIOPIN = (1<<buzzerPinNumber)|(1<<relayPinNumber)|(1<<LedPinNumber);//turn on led,relay and buzzer
+		
+       }
+       else	//if switch released
+       {
+        LPC_GPIO1->FIOPIN = (0<<buzzerPinNumber)|(0<<relayPinNumber)|(0<<LedPinNumber);	//if switch released led,relay,buzzer off
+	
+			
+       }      
+}
+}
