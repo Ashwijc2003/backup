@@ -1,0 +1,22 @@
+int SmokeA0 = A0;  
+
+void setup() {
+  Serial.begin(9600);       
+  pinMode(SmokeA0, INPUT);  
+}
+
+void loop() {
+  int value = analogRead(SmokeA0);  
+  Serial.print("Smoke value: ");
+  Serial.println(value);
+  
+  if (value >= 80) {
+    Serial.println("Smoke is detected!");
+   
+  } else {
+    Serial.println("Smoke is not detected");
+  
+  }
+  
+  delay(2000);  
+}

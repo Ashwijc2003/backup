@@ -1,0 +1,26 @@
+ #include <DHT.h>
+
+DHT dht(2, DHT11);
+
+void setup()
+{
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop()
+{
+  float h, c, f;
+  h = dht.readHumidity();
+  c = dht.readTemperature(true);
+  f = dht.readTemperature();
+  
+  Serial.print("Humidity in % =");
+  Serial.print(h);
+  Serial.print("Temperatrure in c/f =");
+  Serial.print(c);
+  Serial.print("/");
+  Serial.print(f);
+  
+  delay(2000);
+}

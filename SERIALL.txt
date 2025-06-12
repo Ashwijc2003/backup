@@ -1,0 +1,33 @@
+#include<SoftwareSerial.h>
+SoftwareSerial esp(2,3);
+String str;
+void setup()
+{
+  Serial.begin(115200);
+  esp.begin(115200);
+}
+void loop()
+{
+  str=String("hello world");
+  esp.println(str);
+}
+
+
+
+
+
+
+
+ /next program
+ void setup()
+ {
+  Serial.begin(115200);
+  while(1,Serial);
+}
+void loop()
+{
+  if(Serial.available())
+  {
+    Serial.write(Serial.read());
+  }
+}
