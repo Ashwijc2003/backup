@@ -1,0 +1,29 @@
+AREA Reset, DATA, READONLY
+EXPORT Vectors
+
+Vectors
+    DCD 0x20001000
+    DCD Reset_Handler
+
+AREA writedata, CODE, READONLY
+SRC DCD 0x11, 0x22, 0x33, 0x44, 0x55
+ENTRY
+EXPORT Reset_Handler
+
+Reset_Handler
+    LDR R0, =SRC
+    LDR R1, =DST
+    MOV R2, #5
+
+L1
+    LDR R3, [R0], #4
+    STR R3, [R1], #4
+    SUBS R2, R2, #1
+    BNE L1
+
+STOP
+    B STOP
+
+AREA Data, DATA, READWRITE
+DST DCD 0, 0, 0, 0, 0
+END
