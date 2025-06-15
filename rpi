@@ -1,3 +1,15 @@
+python3 -c "import cv2; cap = cv2.VideoCapture('http://192.168.0.105:4747/video'); [print('Frame OK') if cap.read()[0] else print('Error')]; cap.release()"
+[tcp @ 0x28887c30] Connection to tcp://192.168.0.105:4747 failed: Connection refused
+[ WARN:0@36.975] global ./modules/videoio/src/cap_gstreamer.cpp (2401) handleMessage OpenCV | GStreamer warning: Embedded video playback halted; module source reported: Internal data stream error.
+[ WARN:0@36.976] global ./modules/videoio/src/cap_gstreamer.cpp (1356) open OpenCV | GStreamer warning: unable to start pipeline
+[ WARN:0@36.977] global ./modules/videoio/src/cap_gstreamer.cpp (862) isPipelinePlaying OpenCV | GStreamer warning: GStreamer: pipeline have not been created
+[ERROR:0@37.243] global ./modules/videoio/src/cap.cpp (164) open VIDEOIO(CV_IMAGES): raised OpenCV exception:
+
+OpenCV(4.6.0) ./modules/videoio/src/cap_images.cpp:253: error: (-5:Bad argument) CAP_IMAGES: can't find starting number (in the name of file): http://192.168.0.105:4747/video in function 'icvExtractPattern'
+
+
+Error
+
 ### **Running Python Code Directly in the Terminal**  
 Yes! You can execute Python code directly in the terminal **without saving a script file**. Here’s how to do it for your **DroidCam/IP Webcam drone detection**:
 
