@@ -368,3 +368,36 @@ cv2.destroyAllWindows()
    ```
 
 Let me know if you see the video feed! 📱➡️🍓
+
+
+sudo ./install-client  # Installs to /usr/bin/droidcam-cli
+--2025-06-15 17:44:21--  https://files.dev47apps.net/linux/droidcam_1.8.2.zip
+Resolving files.dev47apps.net (files.dev47apps.net)... 172.67.176.140, 104.21.31.133, 2606:4700:3034::6815:1f85, ...
+Connecting to files.dev47apps.net (files.dev47apps.net)|172.67.176.140|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: http://www.dev47apps.com/ [following]
+--2025-06-15 17:44:22--  http://www.dev47apps.com/
+Resolving www.dev47apps.com (www.dev47apps.com)... 198.252.106.244
+Connecting to www.dev47apps.com (www.dev47apps.com)|198.252.106.244|:80... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://www.dev47apps.com/ [following]
+--2025-06-15 17:44:23--  https://www.dev47apps.com/
+Connecting to www.dev47apps.com (www.dev47apps.com)|198.252.106.244|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5655 (5.5K) [text/html]
+Saving to: ‘droidcam_1.8.2.zip’
+
+droidcam_1.8.2.zip                                          100%[=========================================================================================================================================>]   5.52K  --.-KB/s    in 0.002s  
+
+2025-06-15 17:44:24 (3.09 MB/s) - ‘droidcam_1.8.2.zip’ saved [5655/5655]
+
+Archive:  droidcam_1.8.2.zip
+  End-of-central-directory signature not found.  Either this file is not
+  a zipfile, or it constitutes one disk of a multi-part archive.  In the
+  latter case the central directory and zipfile comment will be found on
+  the last disk(s) of this archive.
+unzip:  cannot find zipfile directory in one of droidcam_1.8.2.zip or
+        droidcam_1.8.2.zip.zip, and cannot find droidcam_1.8.2.zip.ZIP, period.
+bash: cd: droidcam: No such file or directory
+sudo: ./install-client: command not found
+
