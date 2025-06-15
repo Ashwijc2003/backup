@@ -1,2 +1,13 @@
 sudo apt update && sudo apt upgrade -y
 sudo reboot
+
+oo
+
+# Install OpenCV and Python tools
+sudo apt install python3-opencv python3-pip git
+
+# Install TensorFlow Lite and GPIO library
+pip3 install tflite-runtime RPi.GPIO
+
+# For camera support (if using Pi Camera later):
+sudo apt install libcamera-dev
