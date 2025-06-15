@@ -1,4 +1,4 @@
-sudo apt update && sudo apt upgrade -y
+nosudo apt update && sudo apt upgrade -y
 sudo reboot
 
 oo
@@ -257,3 +257,114 @@ If `usb0` appears but has no IP:
 
 Let me know if `usb0` appears or if you need help with DroidCam! 🚀
 
+Great choice! The **DroidCam method** is more reliable for Xiaomi/Poco phones like your Poco F6. Here's the **complete step-by-step guide** to set it up via USB:
+
+---
+
+### **Step 1: Install DroidCam on Your Phone**
+1. Download **DroidCam** from the Play Store:  
+   📲 [DroidCam (Android)](https://play.google.com/store/apps/details?id=com.dev47apps.droidcam)  
+2. Open the app → Tap **"USB"** (not WiFi).  
+3. Keep the app open and connect your phone to the Pi via USB.
+
+---
+
+### **Step 2: Set Up DroidCam on Raspberry Pi**
+#### **Install DroidCam Client**
+```bash
+# Download and install the client
+wget https://files.dev47apps.net/linux/droidcam_1.8.2.zip
+unzip droidcam_1.8.2.zip
+cd droidcam
+sudo ./install-client  # Installs to /usr/bin/droidcam-cli
+```
+
+#### **Start the USB Video Feed**
+```bash
+droidcam-cli adb 4747
+```
+- This creates a virtual webcam at `/dev/video0`.  
+- **Troubleshooting**: If you get `adb not found`, run:  
+  ```bash
+  sudo apt install adb && adb start-server
+  ```
+
+---
+
+### **Step 3: Verify the Camera Feed**
+```bash
+# Check if /dev/video0 exists
+ls /dev/video*
+# Test with ffplay (install with `sudo apt install ffmpeg` if needed)
+ffplay /dev/video0
+```
+✅ **Expected**: Live video from your phone. Press `Ctrl+C` to exit.  
+
+---
+
+### **Step 4: Python Script for Drone Detection**
+Modify your script to use DroidCam’s `/dev/video0`:
+```python
+import cv2
+
+cap = cv2.VideoCapture(0)  # Uses DroidCam's /dev/video0
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        print("Error: Couldn't read frame. Reconnecting...")
+        cap.release()
+        cap = cv2.VideoCapture(0)
+        continue
+    
+    # Add your drone detection code here
+    cv2.imshow("DroidCam Feed", frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+```
+
+---
+
+### **Step 5: Optimize Performance**
+1. **Reduce Latency**:  
+   - In DroidCam app → Settings → Disable **"Auto-Focus"** and **"Auto-Exposure"**.  
+   - Set resolution to **640x480** or lower.  
+2. **Improve Detection**:  
+   Skip frames to reduce CPU load:  
+   ```python
+   for _ in range(2): cap.grab()  # Skip 2 frames
+   ret, frame = cap.retrieve()
+   ```
+
+---
+
+### **Troubleshooting DroidCam**
+| Issue | Fix |
+|-------|-----|
+| **`/dev/video0` not found** | Run `sudo droidcam-cli adb 4747` again. Replug USB. |
+| **Black screen** | Enable **"MJPEG"** in DroidCam settings. |
+| **High CPU usage** | Lower resolution to `320x240` in the app. |
+| **ADB errors** | Run `adb kill-server && adb start-server`. |
+
+---
+
+### **Why This Works**
+- **DroidCam USB Mode** bypasses network issues entirely.  
+- Uses **direct USB video streaming** (like a webcam).  
+- No need for `usb0` or WiFi configuration.  
+
+---
+
+### **Final Notes**
+1. Keep your phone **plugged in and charging** during use.  
+2. For **autostart on boot**, add this to `/etc/rc.local` (before `exit 0`):  
+   ```bash
+   su pi -c "droidcam-cli adb 4747 &"
+   ```
+
+Let me know if you see the video feed! 📱➡️🍓
