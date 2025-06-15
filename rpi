@@ -1,5 +1,44 @@
 Perfect! Option 1 is simple to set up and works well for real-time experiments. Here's how to do it step-by-step:
 
+sudo apt update
+sudo apt install python3-opencv python3-pip
+pip3 install numpy
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Get:2 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Hit:3 http://deb.debian.org/debian bookworm-updates InRelease          
+Hit:4 http://archive.raspberrypi.com/debian bookworm InRelease
+Get:5 http://deb.debian.org/debian-security bookworm-security/main armhf Packages [244 kB]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [259 kB]
+Get:7 http://deb.debian.org/debian-security bookworm-security/main Translation-en [158 kB]
+Fetched 708 kB in 4s (165 kB/s)                                
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+python3-opencv is already the newest version (4.6.0+dfsg-12).
+python3-pip is already the newest version (23.0.1+dfsg-1+rpt1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    For more information visit http://rptl.io/venv
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+ashwin@Drone-detector:~ $ 
+
 
 ---
 
