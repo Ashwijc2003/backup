@@ -517,4 +517,12 @@ cv2.destroyAllWindows()
 Let me know if you see the video feed! This method **always works** when DroidCam fails. 🚀
 
 
+bhxxxxxxxxx
+
+wget https://www.dev47apps.com/files/linux/droidcam_2.0.0.zip
+unzip droidcam_2.0.0.zip
+cd droidcam
+sudo ./install-client
+
+
 
