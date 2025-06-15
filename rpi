@@ -11,3 +11,10 @@ pip3 install tflite-runtime RPi.GPIO
 
 # For camera support (if using Pi Camera later):
 sudo apt install libcamera-dev
+
+
+
+oo
+
+mkdir ~/models && cd ~/models
+wget https://tfhub.dev/neso613/lite-model/drone-detection/mobiletf2/ssd_mobilenet_v2/1?lite-format=tflite -O drone_model.tflite
