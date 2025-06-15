@@ -118,3 +118,8 @@ print("Model loaded successfully! Input shape:", interpreter.get_input_details()
 
 ip addr show usb0
 
+
+lsusb  # Check if phone is detected as a USB device
+ip a   # Look for usb0 or rndis0 interface
+dmesg | grep -i rndis  # Check kernel logs for USB tethering errors
+
