@@ -1,4 +1,4 @@
-nosudo apt update && sudo apt upgrade -y
+.nosudo apt update && sudo apt upgrade -y
 sudo reboot
 
 oo
@@ -567,3 +567,7 @@ Done
 ashwi
 
 
+# Install DroidCam client (no USB/ADB needed)
+wget https://files.dev47apps.net/linux/droidcam_2.0.0.zip
+unzip droidcam_2.0.0.zip && cd droidcam
+sudo ./install-client
