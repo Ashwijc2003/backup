@@ -37,3 +37,11 @@ Saving to: ‘drone_model.tflite~’
 drone_model.tflite~                                             [ <=>                                                                                                                                      ]   5.19K  --.-KB/s    in 0.001s  
 
 2025-06-15 15:32:59 (5.11 MB/s) - ‘drone_model.tflite~’ saved [5314]
+
+
+
+modofyingggg
+
+# Create a models directory and download the file
+mkdir -p ~/models && cd ~/models
+wget https://github.com/username/repo/raw/main/drone_model.tflite  # Replace with actual URL
