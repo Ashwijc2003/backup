@@ -75,5 +75,9 @@ error: externally-managed-environment
     create a virtual environment using python3 -m venv path/to/venv.
     Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
     sure you have python3-full installed.
-    
+
+
+
+cd ~/models
+wget https://tfhub.dev/tensorflow/lite-model/ssd_mobilenet_v1/1/metadata/2?lite-format=tflite -O drone_model.tflite
 
