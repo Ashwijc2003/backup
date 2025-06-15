@@ -81,3 +81,27 @@ error: externally-managed-environment
 cd ~/models
 wget https://tfhub.dev/tensorflow/lite-model/ssd_mobilenet_v1/1/metadata/2?lite-format=tflite -O drone_model.tflite
 
+d ~/models
+wget https://tfhub.dev/tensorflow/lite-model/ssd_mobilenet_v1/1/metadata/2?lite-format=tflite -O drone_model.tflite
+--2025-06-15 16:57:52--  https://tfhub.dev/tensorflow/lite-model/ssd_mobilenet_v1/1/metadata/2?lite-format=tflite
+Resolving tfhub.dev (tfhub.dev)... 35.244.233.98
+Connecting to tfhub.dev (tfhub.dev)|35.244.233.98|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://www.kaggle.com/models/tensorflow/ssd-mobilenet-v1/tfLite/metadata/2?lite-format=tflite&tfhub-redirect=true [following]
+--2025-06-15 16:57:53--  https://www.kaggle.com/models/tensorflow/ssd-mobilenet-v1/tfLite/metadata/2?lite-format=tflite&tfhub-redirect=true
+Resolving www.kaggle.com (www.kaggle.com)... 35.244.233.98
+Connecting to www.kaggle.com (www.kaggle.com)|35.244.233.98|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://storage.googleapis.com/kagglesdsdata/models/2477/3323/2.tflite?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20250614%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250614T041944Z&X-Goog-Expires=259200&X-Goog-SignedHeaders=host&X-Goog-Signature=52f467cb7657d4f57f4c0fdfd1b11639702b573e55cbe674e360570f9eeecbbb71e19af7cba8b24816df77851201b3d68eb527ffb439ea666f92cede55d10d7655001331b2793fb72a3b982735b4a4d8e559b629679e066912f3119839b575e85a7126c2c28cdcab94c4e981cd63c337b86be17b2ec6e00e165bc695de17a6e3649904ab5de7f00c25bb42570f02be0e910e44d314e2bb1000b625d4a4526c802c81f04327d774e34b93f0d00bfe196209610191c751dc0256dd29539590b40c289203c0ba1fbaffa7303d65953a1be1d92bf35ac56747502545ccb337aae6f1c356d1488d929d9131e45c26e22825a938b925c9a1b935bce2717acd97c5ad3c [following]
+--2025-06-15 16:57:53--  https://storage.googleapis.com/kagglesdsdata/models/2477/3323/2.tflite?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20250614%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250614T041944Z&X-Goog-Expires=259200&X-Goog-SignedHeaders=host&X-Goog-Signature=52f467cb7657d4f57f4c0fdfd1b11639702b573e55cbe674e360570f9eeecbbb71e19af7cba8b24816df77851201b3d68eb527ffb439ea666f92cede55d10d7655001331b2793fb72a3b982735b4a4d8e559b629679e066912f3119839b575e85a7126c2c28cdcab94c4e981cd63c337b86be17b2ec6e00e165bc695de17a6e3649904ab5de7f00c25bb42570f02be0e910e44d314e2bb1000b625d4a4526c802c81f04327d774e34b93f0d00bfe196209610191c751dc0256dd29539590b40c289203c0ba1fbaffa7303d65953a1be1d92bf35ac56747502545ccb337aae6f1c356d1488d929d9131e45c26e22825a938b925c9a1b935bce2717acd97c5ad3c
+Resolving storage.googleapis.com (storage.googleapis.com)... 142.250.195.251, 142.251.221.187, 142.251.43.59, ...
+Connecting to storage.googleapis.com (storage.googleapis.com)|142.250.195.251|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4185175 (4.0M) [application/octet-stream]
+Saving to: ‘drone_model.tflite’
+
+drone_model.tflite                                          100%[=========================================================================================================================================>]   3.99M  1.48MB/s    in 2.7s    
+
+2025-06-15 16:57:57 (1.48 MB/s) - ‘drone_model.tflite’ saved [4185175/4185175]
+
+
