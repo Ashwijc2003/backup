@@ -105,3 +105,6 @@ drone_model.tflite                                          100%[===============
 2025-06-15 16:57:57 (1.48 MB/s) - ‘drone_model.tflite’ saved [4185175/4185175]
 
 
+
+file ~/models/drone_model.tflite
+
