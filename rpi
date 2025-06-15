@@ -18,3 +18,22 @@ oo
 
 mkdir ~/models && cd ~/models
 wget https://tfhub.dev/neso613/lite-model/drone-detection/mobiletf2/ssd_mobilenet_v2/1?lite-format=tflite -O drone_model.tflite
+
+ppppp
+
+~ $ wget https://tfhub.dev/neso613/lite-model/drone-detection/mobiletf2/ssd_mobilenet_v2/1?lite-format=tflite -O drone_model.tflite~
+--2025-06-15 15:32:57--  https://tfhub.dev/neso613/lite-model/drone-detection/mobiletf2/ssd_mobilenet_v2/1?lite-format=tflite
+Resolving tfhub.dev (tfhub.dev)... 35.244.233.98
+Connecting to tfhub.dev (tfhub.dev)|35.244.233.98|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://www.kaggle.com/models?lite-format=tflite&tfhub-redirect=true [following]
+--2025-06-15 15:32:58--  https://www.kaggle.com/models?lite-format=tflite&tfhub-redirect=true
+Resolving www.kaggle.com (www.kaggle.com)... 35.244.233.98
+Connecting to www.kaggle.com (www.kaggle.com)|35.244.233.98|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘drone_model.tflite~’
+
+drone_model.tflite~                                             [ <=>                                                                                                                                      ]   5.19K  --.-KB/s    in 0.001s  
+
+2025-06-15 15:32:59 (5.11 MB/s) - ‘drone_model.tflite~’ saved [5314]
