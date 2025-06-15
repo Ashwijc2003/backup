@@ -1,4 +1,12 @@
-The **"cannot execute binary file: Exec format error"** occurs because you're trying to run an **x86 binary** on your Raspberry Pi (which uses **ARM architecture**). Here's how to fix it:
+wget https://github.com/dev47apps/droidcam/releases/download/v2.0.0/droidcam_2.0.0-arm.zip
+unzip droidcam_2.0.0-arm.zip
+cd droidcam
+sudo ./install-client
+
+
+
+
+ **"cannot execute binary file: Exec format error"** occurs because you're trying to run an **x86 binary** on your Raspberry Pi (which uses **ARM architecture**). Here's how to fix it:
 
 ---
 
