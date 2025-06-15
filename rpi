@@ -523,6 +523,47 @@ wget https://www.dev47apps.com/files/linux/droidcam_2.0.0.zip
 unzip droidcam_2.0.0.zip
 cd droidcam
 sudo ./install-client
+ashwin@Drone-detector:~/models $ wget https://www.dev47apps.com/files/linux/droidcam_2.0.0.zip
+unzip droidcam_2.0.0.zip
+cd droidcam
+sudo ./install-client
+--2025-06-15 17:50:04--  https://www.dev47apps.com/files/linux/droidcam_2.0.0.zip
+Resolving www.dev47apps.com (www.dev47apps.com)... 198.252.106.244
+Connecting to www.dev47apps.com (www.dev47apps.com)|198.252.106.244|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3134048 (3.0M) [application/zip]
+Saving to: ‘droidcam_2.0.0.zip’
 
+droidcam_2.0.0.zip                                          100%[=========================================================================================================================================>]   2.99M  1.43MB/s    in 2.1s    
+
+2025-06-15 17:50:07 (1.43 MB/s) - ‘droidcam_2.0.0.zip’ saved [3134048/3134048]
+
+Archive:  droidcam_2.0.0.zip
+  inflating: LICENSE                 
+  inflating: README-DKMS.md          
+  inflating: README.md               
+ extracting: icon2.png               
+  inflating: droidcam                
+  inflating: droidcam-cli            
+  inflating: droidcam.desktop        
+  inflating: install-client          
+  inflating: install-dkms            
+  inflating: install-sound           
+  inflating: install-video           
+  inflating: install.common          
+  inflating: uninstall               
+  inflating: uninstall-dkms          
+  inflating: v4l2loopback/Makefile   
+  inflating: v4l2loopback/test.c     
+  inflating: v4l2loopback/v4l2loopback-dc.c  
+bash: cd: droidcam: Not a directory
+Copying files
++ cp uninstall /opt/droidcam-uninstall
++ cp icon2.png /opt/droidcam-icon.png
++ cp droidcam /usr/local/bin/
++ cp droidcam-cli /usr/local/bin/
++ set +x
+Done
+ashwi
 
 
