@@ -1,4 +1,87 @@
-.nosudo apt update && sudo apt upgrade -y
+The **"cannot execute binary file: Exec format error"** occurs because you're trying to run an **x86 binary** on your Raspberry Pi (which uses **ARM architecture**). Here's how to fix it:
+
+---
+
+### **Fix 1: Install the Correct ARM Version**
+1. **Uninstall the wrong version**:
+   ```bash
+   sudo rm /usr/local/bin/droidcam-cli
+   ```
+
+2. **Download the ARM-compatible version**:
+   ```bash
+   wget https://files.dev47apps.net/linux/arm/droidcam_2.0.0-arm.zip
+   unzip droidcam_2.0.0-arm.zip
+   cd droidcam
+   sudo ./install-client
+   ```
+
+3. **Run DroidCam**:
+   ```bash
+   droidcam-cli 192.168.0.105 4747
+   ```
+
+---
+
+### **Fix 2: Use Pre-Compiled ARM Binary (Alternative)**
+If the above fails, manually install:
+```bash
+wget https://github.com/dev47apps/droidcam/raw/master/linux/droidcam-cli-arm -O droidcam-cli
+chmod +x droidcam-cli
+sudo mv droidcam-cli /usr/local/bin/
+```
+
+Then run:
+```bash
+droidcam-cli 192.168.0.105 4747
+```
+
+---
+
+### **Fix 3: Compile from Source (Advanced)**
+If you still get errors:
+```bash
+sudo apt install git make gcc
+git clone https://github.com/dev47apps/droidcam.git
+cd droidcam/linux
+make
+sudo make install
+```
+
+---
+
+### **Verify Installation**
+```bash
+file /usr/local/bin/droidcam-cli
+```
+✅ **Correct output**:  
+`/usr/local/bin/droidcam-cli: ELF 32-bit LSB executable, ARM, version 1 (SYSV), dynamically linked...`
+
+❌ **Wrong output**:  
+If it says `x86` or `64-bit`, you have the wrong binary.
+
+---
+
+### **Still Stuck? Use Python-Only Fallback**
+Skip DroidCam and use **IP Webcam** instead:
+```python
+import cv2
+cap = cv2.VideoCapture("http://192.168.0.105:4747/video")  # DroidCam's direct URL
+while True:
+    ret, frame = cap.read()
+    cv2.imshow("Feed", frame)
+    if cv2.waitKey(1) == ord('q'):
+        break
+cap.release()
+```
+
+---
+
+### **Why This Happened**
+- The Pi runs **ARM**, but you installed an **x86 binary**.
+- The fix ensures you use an **ARM-compatible** version.
+
+Let me know if you see `Connected to 192.168.0.105:4747`! 🚀 apt update && sudo apt upgrade -y
 sudo reboot
 
 oo
