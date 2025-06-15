@@ -1,3 +1,74 @@
+Great! Since your phone is now streaming video at http://192.168.0.105:8080, you can grab that stream directly in your Raspberry Pi using Python + OpenCV.
+
+
+---
+
+✅ Getting Phone Camera Stream into Raspberry Pi
+
+Here’s a minimal Python script to test the live stream from your phone:
+
+🐍 Step 1: Test Stream on Raspberry Pi
+
+Create a file called stream_test.py:
+
+import cv2
+
+# Replace with your actual stream URL
+url = 'http://192.168.0.105:8080/video'
+
+cap = cv2.VideoCapture(url)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        print("Failed to grab frame")
+        break
+
+    cv2.imshow("Phone Camera Stream", frame)
+
+    if cv2.waitKey(1) == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
+
+---
+
+▶️ Step 2: Run the Script
+
+python3 stream_test.py
+
+> This should open a window on your Pi (if you are on desktop) showing the live stream from your phone camera.
+
+
+
+
+---
+
+🛠️ Headless Mode (No GUI / SSH Users)
+
+If you're using Raspberry Pi headless (no monitor, just SSH), and want to process frames without showing them:
+
+Just comment out or remove:
+
+cv2.imshow("Phone Camera Stream", frame)
+
+And remove or comment:
+
+cv2.waitKey(1)
+
+
+---
+
+Would you like me to now add basic object (e.g., red color) detection + GPIO trigger to this stream-reading code?
+
+
+
+
+
+
+
 Perfect! Option 1 is simple to set up and works well for real-time experiments. Here's how to do it step-by-step:
 
 sudo apt update
