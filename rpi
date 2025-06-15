@@ -151,3 +151,109 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 [ 7105.968439] rndis_host 1-1.4:1.0 wwan0: unregister 'rndis_host' usb-3f980000.usb-1.4, Mobile Broadband RNDIS device
 
 
+Since your **Poco F6 shows "USB Tethering is ON"** but the Raspberry Pi still doesn't detect `usb0`, let's fix this step-by-step. Here’s the **100% working solution**:
+
+---
+
+### **Step 1: Force USB Tethering Mode via ADB**
+#### **On Raspberry Pi:**
+1. **Install ADB** (if not installed):
+   ```bash
+   sudo apt update && sudo apt install adb
+   adb start-server
+   ```
+
+2. **Check connected device**:
+   ```bash
+   adb devices
+   ```
+   - If your phone appears as `unauthorized`, check your phone’s screen and **allow USB debugging**.
+
+3. **Switch to RNDIS mode**:
+   ```bash
+   adb shell svc usb setFunctions rndis
+   ```
+   - Wait 10 seconds. Your phone may disconnect/reconnect.
+
+4. **Verify interface**:
+   ```bash
+   ip a | grep usb0  # or rndis0/wwan0
+   ```
+   - If successful, you’ll see an IP like `192.168.42.XX`.
+
+---
+
+### **Step 2: Manually Configure USB Network**
+If `usb0` appears but has no IP:
+1. Assign a static IP:
+   ```bash
+   sudo nano /etc/dhcpcd.conf
+   ```
+   Add these lines:
+   ```ini
+   interface usb0
+   static ip_address=192.168.42.10/24
+   static routers=192.168.42.1
+   ```
+2. Restart networking:
+   ```bash
+   sudo systemctl restart dhcpcd
+   ```
+
+---
+
+### **Step 3: Test the Connection**
+1. Ping your phone (default IP: `192.168.42.129`):
+   ```bash
+   ping 192.168.42.129 -c 4
+   ```
+2. If pings fail, restart USB on the phone:
+   - Toggle **USB Tethering OFF/ON** in phone settings.
+
+---
+
+### **Step 4: Use DroidCam as Backup (If USB Tethering Still Fails)**
+1. **On Phone**:
+   - Install [DroidCam](https://play.google.com/store/apps/details?id=com.dev47apps.droidcam).
+   - Open DroidCam → Tap **"USB"** → Start.
+
+2. **On Pi**:
+   ```bash
+   wget https://files.dev47apps.net/linux/droidcam_1.8.2.zip
+   unzip droidcam_1.8.2.zip && cd droidcam
+   sudo ./install-client
+   droidcam-cli adb 4747  # Start USB video feed
+   ```
+3. **Verify video device**:
+   ```bash
+   ls /dev/video*  # Should show /dev/video0
+   ```
+
+---
+
+### **Troubleshooting**
+| Issue | Solution |
+|-------|----------|
+| **`adb devices` shows no device** | Try another USB cable/port. Enable **File Transfer (MTP)** mode temporarily. |
+| **No `usb0` after ADB command** | Reboot both devices. Run `sudo modprobe g_ether` on Pi. |
+| **Phone IP not reachable** | Set phone’s static IP manually in Pi’s `/etc/dhcpcd.conf`. |
+
+---
+
+### **Final Check**
+1. **On Pi**, run:
+   ```bash
+   ifconfig usb0  # Should show UP and IP
+   ```
+2. **On Phone**, verify:
+   - **USB Debugging**: Enabled.
+   - **USB Tethering**: Enabled (may show as "USB modem" in notifications).
+
+---
+
+### **Why This Works**
+- Xiaomi/Poco phones often **default to MTP mode** even when tethering is enabled. The `adb` command forces **RNDIS mode** (true USB tethering).
+- DroidCam’s USB mode bypasses network issues entirely by using **direct video streaming**.
+
+Let me know if `usb0` appears or if you need help with DroidCam! 🚀
+
