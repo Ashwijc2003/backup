@@ -1,3 +1,79 @@
+
+Got it — you're seeing too much delay (lag) between your phone camera feed and what shows up on the Raspberry Pi.
+
+That’s a common issue when using cv2.VideoCapture() on an HTTP stream (like http://192.168.0.105:8080/video). It buffers frames, causing a 3–10 second lag, which is bad for real-time drone detection.
+
+
+---
+
+✅ Fix the Delay (Low-Latency Real-Time Stream)
+
+To reduce delay, we’ll use a threaded frame grabber, which:
+
+Always reads the latest frame
+
+Skips buffered (old) frames
+
+
+
+---
+
+🔧 Step 1: Install imutils
+
+You've likely done this, but just in case:
+
+pip3 install imutils
+
+
+---
+
+🧠 Step 2: Use a Threaded Video Stream
+
+Replace your stream.py with this version using threading for almost real-time performance:
+
+import cv2
+import imutils
+from imutils.video import VideoStream
+import time
+
+print("🚀 Starting threaded video stream...")
+vs = VideoStream(src='http://192.168.0.105:8080/video').start()
+time.sleep(2.0)  # Warm-up delay
+
+while True:
+    frame = vs.read()
+    if frame is None:
+        print("⚠️ No frame received!")
+        continue
+
+    frame = imutils.resize(frame, width=500)
+    cv2.imshow("Low-Lag Video", frame)
+
+    if cv2.waitKey(1) == ord("q"):
+        break
+
+cv2.destroyAllWindows()
+vs.stop()
+
+
+---
+
+✅ Result:
+
+Much lower delay (usually under 1 second)
+
+Works well with drone detection logic later
+
+
+
+---
+
+Let me know once this runs smoothly, and I’ll help you add motion detection + GPIO trigger on top of this low-lag stream 🛩️💡
+
+
+
+
+
 import cv2
 
 # Replace with your actual stream URL
