@@ -1,3 +1,29 @@
+import cv2
+# Replace with your actual stream URL
+url = 'http://192.168.0.105:8080/video'
+cap = cv2.VideoCapture(url)
+while True:
+ret, frame = cap.read()
+if not ret:
+print("Failed to grab frame")
+break
+cv2.imshow("Phone Camera Stream", frame)
+if cv2.waitKey(1) == ord('q'):
+break
+cap.release()
+cv2.destroyAllWindows()
+bash: import: command not found
+bash: url: command not found
+bash: syntax error near unexpected token `('
+bash: syntax error near unexpected token `('
+bash: syntax error near unexpected token `"Failed to grab frame"'
+bash: break: only meaningful in a `for', `while', or `until' loop
+bash: syntax error near unexpected token `"Phone Camera Stream",'
+bash: syntax error near unexpected token `1'
+bash: break: only meaningful in a `for', `while', or `until' loop
+bash: syntax error near unexpected token `cv2.destroyAllWindows'
+(drone-env) ashwin@Drone-detector:~ $ 
+
 Great! Since your phone is now streaming video at http://192.168.0.105:8080, you can grab that stream directly in your Raspberry Pi using Python + OpenCV.
 
 
@@ -12,23 +38,17 @@ Here’s a minimal Python script to test the live stream from your phone:
 Create a file called stream_test.py:
 
 import cv2
-
 # Replace with your actual stream URL
 url = 'http://192.168.0.105:8080/video'
-
 cap = cv2.VideoCapture(url)
-
 while True:
     ret, frame = cap.read()
     if not ret:
         print("Failed to grab frame")
         break
-
     cv2.imshow("Phone Camera Stream", frame)
-
     if cv2.waitKey(1) == ord('q'):
         break
-
 cap.release()
 cv2.destroyAllWindows()
 
