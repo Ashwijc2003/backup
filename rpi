@@ -108,3 +108,9 @@ drone_model.tflite                                          100%[===============
 
 file ~/models/drone_model.tflite
 
+import tflite_runtime.interpreter as tflite
+
+interpreter = tflite.Interpreter(model_path="/home/pi/models/drone_model.tflite")
+interpreter.allocate_tensors()
+print("Model loaded successfully! Input shape:", interpreter.get_input_details()[0]['shape'])
+
