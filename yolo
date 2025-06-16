@@ -1,3 +1,22 @@
+
+python3 -c "
+import cv2
+cap = cv2.VideoCapture(0)
+while True:
+    ret, frame = cap.read()
+    if ret:
+        cv2.imshow('Live Webcam Feed', frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+cap.release()
+cv2.destroyAllWindows()
+"
+
+
+
+
+
+
 python3 -c "import cv2; cap=cv2.VideoCapture(0); ret, frame = cap.read(); print('Working' if ret else 'Failed')"
 
 
