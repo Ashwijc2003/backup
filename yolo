@@ -1,3 +1,66 @@
+import cv2
+import urllib.request
+import numpy as np
+import RPi.GPIO as GPIO
+import time
+
+# GPIO setup
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+
+url = 'http://192.168.0.105:8080/shot.jpg'  # Your IP Webcam URL
+
+while True:
+    try:
+        # Get image from phone
+        img_resp = urllib.request.urlopen(url)
+        img_np = np.array(bytearray(img_resp.read()), dtype=np.uint8)
+        frame = cv2.imdecode(img_np, -1)
+
+        # Convert to HSV
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+        # Define red color range
+        lower_red1 = np.array([0, 120, 70])
+        upper_red1 = np.array([10, 255, 255])
+        lower_red2 = np.array([170, 120, 70])
+        upper_red2 = np.array([180, 255, 255])
+
+        # Create masks for red
+        mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+        mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+        red_mask = cv2.bitwise_or(mask1, mask2)
+
+        # Show result
+        cv2.imshow("Camera Feed", frame)
+        cv2.imshow("Red Detection", red_mask)
+
+        # Check if red detected
+        red_pixels = cv2.countNonZero(red_mask)
+        if red_pixels > 500:  # Adjust threshold as needed
+            print("Red detected!")
+            GPIO.output(18, GPIO.HIGH)
+        else:
+            GPIO.output(18, GPIO.LOW)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    except Exception as e:
+        print("Error:", e)
+        time.sleep(1)
+
+cv2.destroyAllWindows()
+GPIO.cleanup()
+
+
+
+
+
+
+
+
 python3 - <<EOF
 import cv2
 
