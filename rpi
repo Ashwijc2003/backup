@@ -1,3 +1,101 @@
+Great! Since your script is named red.py, here’s your updated step-by-step to make it auto-start on Raspberry Pi boot using systemd.
+
+
+---
+
+✅ Step-by-Step: Auto-start red.py on Boot
+
+✅ 1. Move your script to a safe location
+
+mkdir -p /home/pi/red_detect
+mv red.py /home/pi/red_detect/
+chmod +x /home/pi/red_detect/red.py
+
+
+---
+
+✅ 2. Create a systemd service file
+
+sudo nano /etc/systemd/system/red-detect.service
+
+Paste this into the file:
+
+[Unit]
+Description=Run red color detection script with GPIO
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/red_detect/red.py
+WorkingDirectory=/home/pi/red_detect/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+
+> ⚠️ If your user is not pi, replace User=pi with your actual username.
+
+
+
+
+---
+
+✅ 3. Enable and start the service
+
+sudo systemctl daemon-reload
+sudo systemctl enable red-detect.service
+sudo systemctl start red-detect.service
+
+
+---
+
+✅ 4. Test if it works
+
+sudo systemctl status red-detect.service
+
+You should see the script running. Now reboot to test auto-start:
+
+sudo reboot
+
+
+---
+
+✅ Optional: Stop or Restart the Script
+
+sudo systemctl stop red-detect.service
+sudo systemctl restart red-detect.service
+
+
+---
+
+Let me know if you want to:
+
+Log output to a file
+
+Add delay/retry if your IP camera isn't up yet
+
+Safely shutdown GPIO on stop
+
+
+You're all set to go fully autonomous now 🎯
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import cv2
 import urllib.request
 import numpy as np
