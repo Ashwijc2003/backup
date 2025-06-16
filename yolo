@@ -1,3 +1,23 @@
+# Activate virtual environment
+source ~/yolov5-env/bin/activate
+
+# Fix GPIO import in detect.py and add output logic
+sed -i '1i\import RPi.GPIO as GPIO\nGPIO.setmode(GPIO.BCM)\nGPIO.setup(18, GPIO.OUT)' ~/yolov5/detect.py
+sed -i '/for det in dets:/a\ \ \ \ \ \ \ \ GPIO.output(18, GPIO.HIGH)' ~/yolov5/detect.py
+
+# Run detection from phone IP camera stream
+cd ~/yolov5
+python detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
+
+
+
+
+
+
+
+
+
+
 Great! Since the phone feed is now active again, and your Raspberry Pi is already set up with everything — you just need to rerun the detection command.
 
 ✅ Step to Re-Start YOLOv5 with Your Phone Camera:
