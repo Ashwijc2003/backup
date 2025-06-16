@@ -1,3 +1,37 @@
+# 1. Install Python 3.9 and venv support
+sudo apt update && sudo apt install -y python3.9 python3.9-venv python3.9-dev wget libopenblas-dev libjpeg-dev libpng-dev libavcodec-dev libavformat-dev libswscale-dev libgtk2.0-dev libgtk-3-dev
+
+# 2. Create and activate Python 3.9 virtual environment
+python3.9 -m venv yolov5-py39
+source yolov5-py39/bin/activate
+
+# 3. Upgrade pip and tools
+pip install --upgrade pip setuptools wheel
+
+# 4. Install core packages
+pip install numpy matplotlib opencv-python
+
+# 5. Download and install PyTorch prebuilt for Python 3.9 ARMv7
+wget https://github.com/nmilosev/pytorch-arm-builds/releases/download/v1.12.0/torch-1.12.0-cp39-none-linux_armv7l.whl
+pip install torch-1.12.0-cp39-none-linux_armv7l.whl
+
+# 6. Clone YOLOv5 (if not already cloned)
+git clone https://github.com/ultralytics/yolov5.git
+cd yolov5
+
+# 7. Install YOLOv5 dependencies
+pip install -r requirements.txt
+
+# 8. Run detection using your phone stream
+python detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
+
+
+
+
+
+
+
+
 Yes, 💯 — you can install everything needed for YOLOv5 (including PyTorch) on your Raspberry Pi 3 in a single block of code.
 
 Here’s a complete copy-paste script that:
