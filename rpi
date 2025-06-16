@@ -1,3 +1,39 @@
+# 1. Ensure the script is executable
+chmod +x /home/ashwin/red.py
+
+# 2. Create a systemd service to auto-run the script on boot
+echo "[Unit]
+Description=Red Color Detection with GPIO Trigger
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/ashwin/red.py
+WorkingDirectory=/home/ashwin
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=ashwin
+
+[Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/red-detect.service > /dev/null
+
+# 3. Reload systemd, enable and start the service
+sudo systemctl daemon-reexec && \
+sudo systemctl daemon-reload && \
+sudo systemctl enable red-detect.service && \
+sudo systemctl start red-detect.service
+
+
+
+
+
+
+
+
+
+
+
+
 Great! Since your script is named red.py, here’s your updated step-by-step to make it auto-start on Raspberry Pi boot using systemd.
 
 
