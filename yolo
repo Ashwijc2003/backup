@@ -1,3 +1,61 @@
+import cv2
+import numpy as np
+import time
+import RPi.GPIO as GPIO
+
+# Setup GPIO pin
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, GPIO.LOW)
+
+# Capture one frame from IP camera
+url = 'http://192.168.0.105:8080/video'  # Replace with your phone IP
+cap = cv2.VideoCapture(url)
+ret, frame = cap.read()
+cap.release()
+
+if not ret:
+    print("❌ Failed to capture frame from camera")
+    GPIO.cleanup()
+    exit()
+
+# Convert to HSV
+hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+# Define red color ranges
+lower_red1 = np.array([0, 120, 70])
+upper_red1 = np.array([10, 255, 255])
+lower_red2 = np.array([170, 120, 70])
+upper_red2 = np.array([180, 255, 255])
+
+# Create red mask
+mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+red_mask = mask1 + mask2
+
+# Count red pixels
+red_pixels = cv2.countNonZero(red_mask)
+print(f"🔍 Red pixel count: {red_pixels}")
+
+# Trigger GPIO if red is detected
+if red_pixels > 500:
+    print("🔴 Red detected! GPIO HIGH for 3 seconds.")
+    GPIO.output(18, GPIO.HIGH)
+    time.sleep(3)
+    GPIO.output(18, GPIO.LOW)
+    print("🟢 GPIO turned LOW.")
+else:
+    print("⚪ No significant red detected.")
+
+GPIO.cleanup()
+
+
+
+
+
+
+
+
 
 import cv2
 import numpy as np
