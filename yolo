@@ -1,3 +1,82 @@
+
+import cv2
+import numpy as np
+import time
+import RPi.GPIO as GPIO
+
+# Setup GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, GPIO.LOW)
+
+# IP Webcam URL (change to your phone's IP)
+url = 'http://192.168.0.105:8080/video'  # Replace with your actual IP
+
+# Timer variables
+triggered = False
+last_trigger_time = 0
+trigger_duration = 3  # seconds
+
+try:
+    cap = cv2.VideoCapture(url)
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("Failed to grab frame")
+            break
+
+        # Convert to HSV and create red mask
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        lower_red1 = np.array([0, 120, 70])
+        upper_red1 = np.array([10, 255, 255])
+        lower_red2 = np.array([170, 120, 70])
+        upper_red2 = np.array([180, 255, 255])
+        mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+        mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+        red_mask = mask1 + mask2
+
+        red_pixels = cv2.countNonZero(red_mask)
+        current_time = time.time()
+
+        if red_pixels > 500 and not triggered:
+            print("🔴 Red detected! Triggering GPIO HIGH for 3 seconds.")
+            GPIO.output(18, GPIO.HIGH)
+            triggered = True
+            last_trigger_time = current_time
+
+        if triggered and (current_time - last_trigger_time > trigger_duration):
+            GPIO.output(18, GPIO.LOW)
+            print("🟢 GPIO turned LOW after 3 seconds.")
+            triggered = False
+
+        # Optional: Display feed
+        cv2.imshow("Live Feed", frame)
+        if cv2.waitKey(1) == ord('q'):
+            break
+
+except KeyboardInterrupt:
+    print("Stopped by User")
+
+finally:
+    cap.release()
+    cv2.destroyAllWindows()
+    GPIO.output(18, GPIO.LOW)
+    GPIO.cleanup()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import cv2
 import urllib.request
 import numpy as np
