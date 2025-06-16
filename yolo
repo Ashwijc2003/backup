@@ -1,0 +1,59 @@
+Yes—the GitHub link is absolutely working. You can access the official YOLOv5 repository and docs as follows:
+
+
+---
+
+✅ YOLOv5 on GitHub
+
+The main repository is fully available and up‑to‑date:
+
+ultralytics/yolov5 — Official YOLOv5 code with model definitions, examples, and the detect.py script  
+
+
+You’ll find everything needed to clone, install, and run detection from live streams.
+
+
+---
+
+📘 Quickstart Guide
+
+The quickstart instructions show how to get everything running fast:
+
+1. Clone repository
+
+
+2. Install dependencies
+
+
+3. Run detect.py with your camera source  :
+
+
+
+git clone https://github.com/ultralytics/yolov5
+cd yolov5
+pip install -r requirements.txt
+python3 detect.py --source http://<your-phone-ip>:8080/video --weights yolov5n.pt --conf 0.5
+
+It's straightforward, and your object will be tracked live with bounding boxes.
+
+
+---
+
+🔍 Confirmation
+
+The presence of the detect.py script, the README, and pip-installable models confirm the repo’s integrity and availability  
+
+
+---
+
+✅ What You Should Do Next
+
+Run those commands above on your Pi (or laptop if Pi is too slow).
+
+Use --source to point to your phone’s stream.
+
+Test with your drone as it flies.
+
+
+Let me know once you've cloned and tested it—we'll build motion/LED trigger integration after that!
+
