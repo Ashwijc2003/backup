@@ -1,4 +1,29 @@
 Yes—the GitHub link is absolutely working. You can access the official YOLOv5 repository and docs as follows:
+loning into 'yolov5'...
+remote: Enumerating objects: 17493, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 17493 (delta 1), reused 0 (delta 0), pack-reused 17490 (from 3)
+Receiving objects: 100% (17493/17493), 16.59 MiB | 4.46 MiB/s, done.
+Resolving deltas: 100% (11992/11992), done.
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    For more information visit http://rptl.io/venv
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+bash: 192.168.0.105: No such file or directory
+ashwin@Drone-detector:~/yolov5 $ 
 
 
 ---
