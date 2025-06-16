@@ -1,3 +1,60 @@
+
+You're almost there! The error you're seeing is because Debian Bookworm (your Raspberry Pi OS version) doesn't allow direct pip3 install into the system-wide Python environment by default.
+
+
+---
+
+✅ Here's how to fix it quickly:
+
+🛠️ Use a virtual environment — this is the clean and safe method
+
+Run these commands inside your ~/yolov5 folder:
+
+# Step 1: Install the venv package if not already
+sudo apt install python3-venv -y
+
+# Step 2: Create a virtual environment
+python3 -m venv yolov5-env
+
+# Step 3: Activate the virtual environment
+source yolov5-env/bin/activate
+
+# Step 4: Now install the requirements safely inside the venv
+pip install --upgrade pip
+pip install -r requirements.txt
+
+Now you're inside an isolated Python environment and can run YOLOv5 safely.
+
+
+---
+
+🚀 Run Detection After Setup:
+
+Once the install is done and you're still inside the venv, run:
+
+python detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
+
+
+---
+
+❗ If You Exit or Reboot:
+
+Next time, just do:
+
+cd ~/yolov5
+source yolov5-env/bin/activate
+python detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
+
+Let me know once you're done with this — I’ll help with GPIO next or help reduce delay.
+
+
+
+
+
+
+
+
+
 Yes—the GitHub link is absolutely working. You can access the official YOLOv5 repository and docs as follows:
 loning into 'yolov5'...
 remote: Enumerating objects: 17493, done.
