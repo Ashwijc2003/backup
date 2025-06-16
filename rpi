@@ -1,3 +1,76 @@
+import cv2
+import urllib.request
+import numpy as np
+import time
+import RPi.GPIO as GPIO
+
+# GPIO Setup
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, GPIO.LOW)
+
+# Fast image URL from IP Webcam app
+url = 'http://192.168.0.105:8080/shot.jpg'  # Replace with your phone IP if it changes
+
+print("📷 Red detection started (2s GPIO trigger)...")
+
+try:
+    while True:
+        try:
+            # Get image from IP Webcam
+            img_resp = urllib.request.urlopen(url, timeout=1)
+            img_np = np.array(bytearray(img_resp.read()), dtype=np.uint8)
+            frame = cv2.imdecode(img_np, -1)
+
+            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+            # Red color HSV ranges
+            lower_red1 = np.array([0, 120, 70])
+            upper_red1 = np.array([10, 255, 255])
+            lower_red2 = np.array([170, 120, 70])
+            upper_red2 = np.array([180, 255, 255])
+
+            mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+            mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+            red_mask = mask1 + mask2
+
+            red_pixels = cv2.countNonZero(red_mask)
+            print(f"🔴 Red pixels: {red_pixels}")
+
+            if red_pixels > 500:
+                print("✅ Red detected! GPIO HIGH for 2s.")
+                GPIO.output(18, GPIO.HIGH)
+                time.sleep(2)
+                GPIO.output(18, GPIO.LOW)
+            else:
+                GPIO.output(18, GPIO.LOW)
+
+        except Exception as e:
+            print("⚠️ Error fetching frame:", e)
+            GPIO.output(18, GPIO.LOW)
+            time.sleep(0.5)
+
+        time.sleep(0.2)  # control frame rate
+
+except KeyboardInterrupt:
+    print("🛑 Exiting program...")
+
+finally:
+    GPIO.output(18, GPIO.LOW)
+    GPIO.cleanup()
+    cv2.destroyAllWindows()
+    print("🧹 GPIO cleaned. Exit complete.")
+
+
+
+
+
+
+
+
+
+
+
 Great job getting it installed! Since you're still facing a lot of delay, even after using VideoStream from imutils, we need to dig deeper into the real-time video issue.
 
 Let’s fix this with the most efficient, low-latency approach for your setup.
