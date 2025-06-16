@@ -1,3 +1,61 @@
+import urllib.request
+import numpy as np
+import cv2
+import os
+import torch
+import RPi.GPIO as GPIO
+from pathlib import Path
+from models.common import DetectMultiBackend
+from utils.datasets import LoadImages
+from utils.general import non_max_suppression, scale_coords
+from utils.torch_utils import select_device
+
+# --- Setup GPIO ---
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, GPIO.LOW)
+
+# --- Capture one frame from IP camera ---
+url = 'http://192.168.0.105:8080/shot.jpg'
+img_resp = urllib.request.urlopen(url)
+img_np = np.array(bytearray(img_resp.read()), dtype=np.uint8)
+frame = cv2.imdecode(img_np, -1)
+cv2.imwrite("oneshot.jpg", frame)
+
+# --- Load YOLOv5 model ---
+weights = 'yolov5n.pt'
+device = select_device('')
+model = DetectMultiBackend(weights, device=device)
+stride, names, pt = model.stride, model.names, model.pt
+img_size = 640
+dataset = LoadImages('oneshot.jpg', img_size=img_size, stride=stride, auto=pt)
+
+# --- Inference ---
+for path, img, im0s, vid_cap, s in dataset:
+    img = torch.from_numpy(img).to(device)
+    img = img.float() / 255.0
+    img = img.unsqueeze(0) if img.ndimension() == 3 else img
+
+    pred = model(img, augment=False, visualize=False)
+    pred = non_max_suppression(pred, 0.5, 0.45, classes=None, agnostic=False)
+
+    for det in pred:
+        if det is not None and len(det):
+            GPIO.output(18, GPIO.HIGH)  # ✅ Trigger GPIO
+            print("🎯 Object Detected!")
+        else:
+            GPIO.output(18, GPIO.LOW)
+            print("❌ No object detected.")
+
+# --- Cleanup ---
+GPIO.cleanup()
+
+
+
+
+
+
 # Fix the top of detect.py to import GPIO and set up pin 18
 sed -i '1s/^/import RPi.GPIO as GPIO\nGPIO.setmode(GPIO.BCM)\nGPIO.setup(18, GPIO.OUT)\n/' ~/yolov5/detect.py
 
