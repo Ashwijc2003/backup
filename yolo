@@ -1,3 +1,89 @@
+Yes, 💯 — you can install everything needed for YOLOv5 (including PyTorch) on your Raspberry Pi 3 in a single block of code.
+
+Here’s a complete copy-paste script that:
+
+1. Sets up a virtual environment
+
+
+2. Installs dependencies
+
+
+3. Downloads & installs PyTorch for ARM
+
+
+4. Verifies everything is ready
+
+
+
+
+---
+
+✅ One-Block Setup Script for YOLOv5 on Raspberry Pi 3
+
+> 💡 Paste this into your terminal as a single block (it handles everything).
+
+
+
+sudo apt update && sudo apt install -y python3-pip python3-venv libopenblas-dev libblas-dev libatlas-base-dev libjpeg-dev libpng-dev libavcodec-dev libavformat-dev libswscale-dev libgtk2.0-dev libgtk-3-dev
+
+# Create virtual environment
+python3 -m venv yolov5-env
+source yolov5-env/bin/activate
+
+# Upgrade pip and tools
+pip install --upgrade pip setuptools wheel
+
+# Install core dependencies
+pip install numpy matplotlib opencv-python
+
+# Download and install PyTorch for Raspberry Pi 3 (ARMv7, Python 3.9)
+wget https://github.com/nmilosev/pytorch-arm-builds/releases/download/v1.12.0/torch-1.12.0-cp39-none-linux_armv7l.whl
+pip install torch-1.12.0-cp39-none-linux_armv7l.whl
+
+# Optional: Verify torch installed correctly
+python3 -c "import torch; print('✅ PyTorch Version:', torch.__version__)"
+
+# Clone YOLOv5 (if not done)
+git clone https://github.com/ultralytics/yolov5
+cd yolov5
+
+# Install YOLOv5 requirements (some might already be installed)
+pip install -r requirements.txt
+
+
+---
+
+⚠️ Make sure:
+
+You are using Python 3.9 (check with python3 --version)
+
+You’re on a Raspberry Pi 3, running Raspberry Pi OS Bookworm or Bullseye
+
+
+
+---
+
+After this, you can run:
+
+sudo python3 detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
+
+And GPIO should also work if you’ve added the code!
+
+
+---
+
+Let me know if you want to turn GPIO high for specific objects only like 'drone', 'airplane', or 'bird', or if you want to run it headless (without monitor) in your college demo.
+
+
+
+
+
+
+
+
+
+
+
 sudo python3 detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
 You're almost there! The error you're seeing is because Debian Bookworm (your Raspberry Pi OS version) doesn't allow direct pip3 install into the system-wide Python environment by default.
 udo python3 detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
