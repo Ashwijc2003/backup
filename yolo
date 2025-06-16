@@ -1,6 +1,12 @@
 sudo python3 detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
 You're almost there! The error you're seeing is because Debian Bookworm (your Raspberry Pi OS version) doesn't allow direct pip3 install into the system-wide Python environment by default.
+udo python3 detect.py --source http://192.168.0.105:8080/video --weights yolov5n.pt --conf 0.5
+Traceback (most recent call last):
+  File "/home/ashwin/yolov5/detect.py", line 41, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
 
+ 
 
 ---
 
