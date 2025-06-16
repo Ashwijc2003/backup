@@ -3,6 +3,77 @@ import numpy as np
 import time
 import RPi.GPIO as GPIO
 
+# Setup GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, GPIO.LOW)
+
+# Open phone IP webcam stream
+cap = cv2.VideoCapture('http://192.168.0.105:8080/video')  # Replace with your phone's IP
+
+if not cap.isOpened():
+    print("❌ Cannot open video stream")
+    GPIO.cleanup()
+    exit()
+
+print("🔁 Running red detection loop...")
+
+try:
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("⚠️ Failed to grab frame")
+            continue
+
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+        # Define red color range in HSV
+        lower_red1 = np.array([0, 120, 70])
+        upper_red1 = np.array([10, 255, 255])
+        lower_red2 = np.array([170, 120, 70])
+        upper_red2 = np.array([180, 255, 255])
+
+        # Create masks for red
+        mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+        mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+        red_mask = mask1 + mask2
+
+        red_pixels = cv2.countNonZero(red_mask)
+        print(f"🔴 Red Pixels: {red_pixels}")
+
+        if red_pixels > 500:
+            print("✅ Red Detected! Triggering GPIO.")
+            GPIO.output(18, GPIO.HIGH)
+            time.sleep(3)
+            GPIO.output(18, GPIO.LOW)
+        else:
+            GPIO.output(18, GPIO.LOW)
+
+        time.sleep(1)  # Short delay before next frame
+
+except KeyboardInterrupt:
+    print("🛑 Stopped by user")
+
+finally:
+    cap.release()
+    GPIO.cleanup()
+    print("🧹 Cleaned up resources")
+
+
+
+
+
+
+
+
+
+
+
+import cv2
+import numpy as np
+import time
+import RPi.GPIO as GPIO
+
 # Setup GPIO pin
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.OUT)
