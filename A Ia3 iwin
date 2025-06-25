@@ -1,0 +1,415 @@
+Regula Falsi method
+from sympy import *
+x= Symbol ('x')
+g = input ('Enter the function ') #%x^3-2*x-5; % function
+f= lambdify (x , g )
+a= float ( input ('Enter a valus :') ) #2
+b= float ( input ('Enter b valus :') ) # 3
+N=int( input ('Enter number of iterations :') ) #5
+for i in range (1 , N+1 ):
+c=( a*f ( b )-b*f ( a ) )/( f ( b )-f ( a ) )
+if (( f ( a )*f ( c )<0 ) ):
+b=c
+else :
+a=c
+print ('itration %d \t the root %0.3f \t function value %0.3f \n'%
+(i ,c , f ( c ) ) ) ;
+
+
+
+
+rom sympy import *
+x= Symbol ('x')
+g = input ('Enter the function ') #%x^3-2*x-5; % function
+f= lambdify (x , g )
+a= float ( input ('Enter a valus :') ) # 2
+b= float ( input ('Enter b valus :') ) # 3
+N= float ( input ('Enter tolarence :') ) # 0.001
+x=a ;
+c=b ;
+i=0
+while (abs( x-c )>=N ):
+x=c
+c=(( a*f ( b )-b*f ( a ) )/( f ( b )-f ( a ) ) ) ;
+if (( f ( a )*f ( c )<0 ) ):
+b=c
+else :
+a=c
+i=i+1
+print ('itration %d \t the root %0.3f \t function value %0.3f \n'%
+(i ,c , f ( c ) ) ) ;
+print ('final value of the root is %0.5f '%c )
+
+
+
+
+rom sympy import *
+x= Symbol ('x')
+g = input ('Enter the function ') #%3x -cos(x)-1; % function
+f= lambdify (x , g )
+dg = diff ( g ) ;
+114
+df= lambdify (x , dg )
+x0= float ( input ('Enter the intial approximation ') ) ; # x0=1
+n= int( input ('Enter the number of iterations ') ) ; #n=5;
+for i in range (1 , n+1 ):
+x1 =( x0 - ( f ( x0 )/df ( x0 ) ) )
+print ('itration %d \t the root %0.3f \t function value %0.3f \n'%
+(i , x1 , f ( x1 ) ) ) ; # print all
+iteration value
+x0 = x1
+
+
+
+rom sympy import *
+import numpy as np
+n = int( input ('Enter number of data points : ') )
+210
+x = np . zeros (( n ) )
+y = np . zeros (( n , n ) )
+# Reading data points
+print ('Enter data for x and y: ')
+for i in range ( n ):
+x[i] = float ( input ( 'x['+str( i )+']= ') )
+y[i][0] = float ( input ( 'y['+str( i )+']= ') )
+# Generating forward difference table
+for i in range (1 , n ):
+for j in range (0 , n-i ):
+y[j][i] = y[j+1][i-1] - y[j][i-1]
+print ('\ nFORWARD DIFFERENCE TABLE \n') ;
+for i in range (0 , n ):
+print ('%0.2f ' %( x[i]) , end='')
+for j in range (0 , n-i ):
+print ('\t\t%0.2f ' %( y[i][j]) , end='')
+print ()
+# obtaining the polynomial
+t= symbols ('t')
+f=[] # f is a list type data
+p=( t-x[0])/( x[1]-x[0])
+f . append ( p )
+for i in range (1 , n-1 ):
+f . append ( f[i-1]*( p-i )/( i+1 ) )
+poly =y[0][0]
+for i in range ( n-1 ):
+poly = poly +y[0][i+1]*f[i]
+116
+simp_poly = simplify ( poly )
+print ('\ nTHE INTERPOLATING POLYNOMIAL IS\n') ;
+pprint ( simp_poly )
+# if you want to interpolate at some point the next session will help
+inter = input ('Do you want to interpolate at a point (y/n)? ') # y
+if inter =='y':
+a= float ( input ('enter the point ') ) #2
+interpol = lambdify (t , simp_poly )
+result = interpol ( a )
+print ('\ nThe value of the function at ' ,a ,'is\n', result ) ;
+
+
+
+rom sympy import *
+import numpy as np
+import sys
+print (" This will use Newton 's backword intepolation formula ")
+# Reading number of unknowns
+n = int( input ('Enter number of data points : ') )
+# Making numpy array of n & n x n size and initializing
+# to zero for storing x and y value along with differences of y
+x = np . zeros (( n ) )
+y = np . zeros (( n , n ) )
+# Reading data points
+117
+print ('Enter data for x and y: ')
+for i in range ( n ):
+x[i] = float ( input ( 'x['+str( i )+']= ') )
+y[i][0] = float ( input ( 'y['+str( i )+']= ') )
+# Generating backward difference table
+for i in range (1 , n ):
+for j in range ( n-1 , i-2 ,-1 ):
+y[j][i] = y[j][i-1] - y[j-1][i-1]
+print ('\ nBACKWARD DIFFERENCE TABLE \n') ;
+for i in range (0 , n ):
+print ('%0.2f ' %( x[i]) , end='')
+for j in range (0 , i+1 ):
+print ('\t%0.2f ' %( y[i][j]) , end='')
+print ()
+# obtaining the polynomial
+t= symbols ('t')
+f=[]
+p=( t-x[n-1])/( x[1]-x[0])
+f . append ( p )
+for i in range (1 , n-1 ):
+f . append ( f[i-1]*( p+i )/( i+1 ) )
+poly =y[n-1][0]
+print ( poly )
+for i in range ( n-1 ):
+poly = poly +y[n-1][i+1]*f[i]
+simp_poly = simplify ( poly )
+print ('\ nTHE INTERPOLATING POLYNOMIAL IS\n') ;
+pprint ( simp_poly )
+# if you want to interpolate at some point the next session will help
+inter = input ('Do you want to interpolate at a point (y/n)? ')
+if inter =='y':
+a= float ( input ('enter the point ') )
+interpol = lambdify (t , simp_poly )
+result = interpol ( a )
+print ('\ nThe value of the function at ' ,a ,'is\n', result ) ;
+
+
+
+
+Definition of the function to integrate
+def my_func ( x ):
+return 1 / ( 1 + x ** 2 )
+# Function to implement trapezoidal method
+def trapezoidal ( x0 , xn , n ):
+h = ( xn - x0 ) / n # Calculating step
+size
+# Finding sum
+integration = my_func ( x0 ) + my_func ( xn ) # Adding first and
+last terms
+for i in range (1 , n ):
+k = x0 + i * h # i-th step value
+integration = integration + 2 * my_func ( k ) # Adding areas of the
+trapezoids
+# Proportioning sum of trapezoid areas
+integration = integration * h / 2
+return integration
+# Input section
+lower_limit = float ( input (" Enter lower limit of integration : ") )
+upper_limit = float ( input (" Enter upper limit of integration : ") )
+sub_interval = int ( input (" Enter number of sub intervals : ") )
+# Call trapezoidal () method and get result
+result = trapezoidal ( lower_limit , upper_limit , sub_interval )
+# Print result
+print (" Integration result by Trapezoidal method is: " , result )
+
+
+
+
+
+Definition of the function to integrate
+def my_func ( x ):
+return 1 / ( 1 + x ** 2 )
+# Function to implement the Simpson 's one - third rule
+def simpson13 ( x0 , xn , n ):
+h = ( xn - x0 ) / n # calculating step size
+# Finding sum
+integration = ( my_func ( x0 ) + my_func ( xn ) )
+k = x0
+for i in range (1 , n ):
+if i%2 == 0:
+integration = integration + 4 * my_func ( k )
+else :
+integration = integration + 2 * my_func ( k )
+k += h
+# Finding final integration value
+integration = integration * h * ( 1/3 )
+return integration
+# Input section
+lower_limit = float ( input (" Enter lower limit of integration : ") )
+upper_limit = float ( input (" Enter upper limit of integration : ") )
+sub_interval = int ( input (" Enter number of sub intervals : ") )
+# Call trapezoidal () method and get result
+result = simpson13 ( lower_limit , upper_limit , sub_interval )
+print (" Integration result by Simpson 's 1/3 method is: %0.6f" % ( result
+
+
+
+
+
+# module taylor
+'''X,Y = taylor (deriv ,x,y,xStop ,h).
+4th - order Taylor series method for solving the initial value problem {y
+}' = {F(x,{y})}, where
+{y} = {y[0] ,y[1] ,...y[n-1]}.
+x,y = initial conditions
+xStop = terminal value of x
+h = increment of x
+'''
+from numpy import array
+def taylor ( deriv ,x ,y , xStop , h ):
+X = []
+Y = []
+X . append ( x )
+Y . append ( y )
+while x < xStop : # Loop over integration steps
+D = deriv (x , y ) # Derivatives of y
+H = 1 . 0
+for j in range ( 3 ): # Build Taylor series
+H = H*h/( j + 1 )
+y = y + D[j]*H # H = h^j/j!
+x = x + h
+X . append ( x ) # Append results to
+Y . append ( y ) # lists X and Y
+return array ( X ) ,array ( Y ) # Convert lists into arrays
+# deriv = user - supplied function that returns derivatives in the 4 x n
+array
+'''
+[y '[0] y '[1] y '[2] ... y '[n-1]
+y ' '[0] y ' '[1] y ' '[2] ... y ' '[n-1]
+y '''[0] y '''[1] y '''[2] ... y '''[n-1]
+y ''''[0] y''''[1] y ''''[2] ... y''''[n-1]]
+'''
+def deriv (x , y ):
+D = zeros (( 4 , 1 ) )
+124
+D[0] = [2*y[0] + 3*exp( x )]
+D[1] = [4*y[0]+ 9*exp( x )]
+D[2] = [8*y[0]+ 21*exp( x )]
+D[3] = [16*y[0]+ 45*exp( x )]
+return D
+x = 0 . 0 # Initial value of x
+xStop = 0 . 3 # last value
+y = array ([0 . 0]) # Initial values of y
+h = 0 . 1 # Step size
+X , Y = taylor ( deriv ,x ,y , xStop , h )
+print ("The required values are :at x= %0.2f , y=%0.5f , x=%0.2f , y=%0.5f ,
+x = %0.2f , y=%0.5f ,x = %0.2f , y=%0
+.5f"%( X[0],Y[0],X[1],Y[1],X[2],Y[2]
+,X[3],Y[3] ) )
+
+
+
+
+mport numpy as np
+import matplotlib . pyplot as plt
+# Define parameters
+f = lambda x , y: np .exp(-x ) # ODE
+h = 0 . 2 # Step size
+y0 = -1 # Initial Condition
+n=3
+# Explicit Euler Method
+y[0] = y0
+x[0]=0
+for i in range (0 , n ):
+x[i+1]=x[i]+h
+y[i + 1] = y[i] + h*f ( x[i], y[i])
+print ("The required values are at x= %0.2f , y=%0.5f , x=%0.2f , y=%0.5f ,
+x = %0.2f , y=%0.5f ,x = %0.2f , y=%0.
+5f"%( x[0],y[0],x[1],y[1],x[2],y[2],
+x[3],y[3]) )
+print ("\n\n")
+plt . plot (x , y , 'bo - -', label =' Approximate ')
+plt . plot (x , -np .exp (-x ) , 'g* -', label ='Exact ')
+plt . title (" Approximate and Exact Solution " )
+plt . xlabel ('x')
+plt . ylabel ('f(x)')
+plt . grid ()
+plt . legend ( loc ='best ')
+plt . show ()
+
+
+mport numpy as np
+import matplotlib . pyplot as plt
+# Define parameters
+f = lambda x , y: -2*y+( x ** 3 )*np .exp(-2*x ) # ODE
+h = 0 . 1 # Step size
+y0 = 1 # Initial Condition
+n=2
+# Explicit Euler Method
+y[0] = y0
+x[0]=0
+for i in range (0 , n ):
+x[i+1]=x[i]+h
+y[i + 1] = y[i] + h*f ( x[i], y[i])
+print ("The required values are at x= %0.2f , y=%0.5f , x=%0.2f , y=%0.5f ,x
+=%0.2f , y=%0.5f\n\n"%( x[0],y[0],x[1
+],y[1],x[2],y[2]) )
+plt . plot (x , y , 'bo - -', label =" Approximate ( Euler 's method )")
+plt . title (" Solution by Euler 's method ")
+plt . xlabel ('x')
+plt . ylabel ('f(x)')
+plt . grid ()
+plt . legend ( loc ='best ')
+plt . show ()
+
+
+mport numpy as np
+import matplotlib . pyplot as plt
+def modified_euler (f , x0 , y0 , h , n ):
+x = np . zeros ( n+1 )
+y = np . zeros ( n+1 )
+x[0] = x0
+y[0] = y0
+for i in range ( n ):
+x[i+1] = x[i] + h
+k1 = h * f ( x[i], y[i])
+k2 = h * f ( x[i+1], y[i] + k1 )
+y[i+1] = y[i] + 0 . 5 * ( k1 + k2 )
+return x , y
+128
+def f (x , y ):
+return -0 . 01 * y # ODE dy/dx = -ky
+x0 = 0 . 0
+y0 = 100 . 0
+h = 25
+n = 4
+x , y = modified_euler (f , x0 , y0 , h , n )
+print ("The required value at x= %0.2f , y=%0.5f"%( x[4],y[4]) )
+print ("\n\n")
+# Plotting the results
+plt . plot (x , y , 'bo -')
+plt . xlabel ('x')
+plt . ylabel ('y')
+plt . title ('Solution of dy/dx = -ky using Modified Euler \'s Method ')
+plt . grid ( True )
+plt . show (
+
+
+rom sympy import *
+import numpy as np
+def RungeKutta (g , x0 ,h , y0 , xn ):
+x , y= symbols ('x,y')
+f= lambdify ([x , y],g )
+xt=x0+h
+Y=[y0]
+while xt<=xn:
+k1=h*f ( x0 , y0 )
+k2=h*f ( x0+h/2 , y0+k1/2 )
+k3=h*f ( x0+h/2 , y0+k2/2 )
+k4=h*f ( x0+h , y0+k3 )
+y1=y0+( 1/6 )*( k1+2*k2+2*k3+k4 )
+Y . append ( y1 )
+# print ('y(%3.3f '%xt ,') is %3.3f '%y1)
+x0=xt
+y0=y1
+xt=xt+h
+return np . round (Y , 2 )
+RungeKutta ('1+(y/x)',1 , 0 .2 ,2 , 2
+
+
+
+
+Milne 's method to solve first order DE
+# Use corrector formula thrice
+x0=1
+y0=2
+131
+y1=2 . 2156
+y2=2 . 4649
+y3=2 . 7514
+h=0 . 1
+x1=x0+h
+x2=x1+h
+x3=x2+h
+x4=x3+h
+def f (x , y ):
+return x ** 2+( y/2 )
+y10 =f ( x0 , y0 )
+y11 =f ( x1 , y1 )
+y12 =f ( x2 , y2 )
+y13 =f ( x3 , y3 )
+y4p =y0+( 4*h/3 )*( 2*y11-y12+2*y13 )
+print ('predicted value of y4 is %3.3f '%y4p )
+y14 =f ( x4 , y4p ) ;
+for i in range (1 , 4 ):
+y4=y2+( h/3 )*( y14 +4*y13 +y12 ) ;
+print ('corrected value of y4 after \t iteration %d is \t %3.5f\t '%
+(i , y4 ) )
+y14=f ( x4 , y4 ) ;
+
+
+
+= RungeKutta ('x-y**2',0 , 0 .2 ,0 , 0 . 8 )
+print ('y values from Runge -Kutta method :',Y )
+Milne ('x-y**2',0 , 0 .2 , Y[0],Y[1],Y[2],Y[3]
